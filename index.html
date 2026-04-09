@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Mathematics Seminar Series</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <p class="series-label">Department of Mathematics · PhD Seminar Series</p>
+    <h1>Mathematical Weekly</h1>
+    <div class="header-meta">
+      <span>Academic Year 2025–26</span>
+      <span>Every Thursday, 6:30 – 7:30 PM</span>
+      <span>Lecture Hall: A317</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#upcoming">Upcoming</a></li>
+    <li><a href="#past">Past Lectures</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#organizers">Organizers</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- UPCOMING -->
+  <section id="upcoming">
+    <h2>Upcoming Seminar</h2>
+    <div id="upcoming-container"></div>
+  </section>
+
+  <!-- PAST -->
+  <section id="past">
+    <h2>Past Lectures</h2>
+    <div id="past-container"></div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section id="schedule">
+    <h2>Full Schedule 2025–26</h2>
+
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Speaker</th>
+          <th>Topic</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="schedule-body"></tbody>
+    </table>
+  </section>
+
+  <!-- ORGANIZERS -->
+  <section id="organizers">
+    <h2>Organizers</h2>
+
+    <div class="organizer-grid">
+
+      <div class="organizer-card">
+        <div class="initials">SM</div>
+        <h3>Suhas B Mahesh</h3>
+        <p>Geometry · 1st Year</p>
+        <a href="mailto:sm834@snu.edu.in">sm834@snu.edu.in</a>
+      </div>
+
+      <div class="organizer-card">
+        <div class="initials">SH</div>
+        <h3>Shivani Mishra</h3>
+        <p>Geometry · 1st Year</p>
+        <a href="mailto:sm907@snu.edu.in">sm907@snu.edu.in</a>
+      </div>
+
+      <div class="organizer-card">
+        <div class="initials">LS</div>
+        <h3>Leena Sarma</h3>
+        <p>Optimization · 1st Year</p>
+        <a href="mailto:ls451@snu.edu.in">ls451@snu.edu.in</a>
+      </div>
+
+      <div class="organizer-card">
+        <div class="initials">RB</div>
+        <h3>R Bhadrashri</h3>
+        <p>Algebra · 1st Year</p>
+        <a href="mailto:rb150@snu.edu.in">rb150@snu.edu.in</a>
+      </div>
+
+      <div class="organizer-card">
+        <div class="initials">AS</div>
+        <h3>Adarsh S</h3>
+        <p>Data Science · 1st Year</p>
+        <a href="mailto:as197@snu.edu.in">as197@snu.edu.in</a>
+      </div>
+
+    </div>
+
+    <div class="advisor-card">
+      <p class="advisor-label">Faculty Advisor</p>
+      <h3>Prof. A. Satyanarayana Reddy</h3>
+      <p>Department of Mathematics</p>
+      <p>School of Natural Sciences</p>
+      <p class="advisor-sub">Shiv Nadar Institute of Eminence</p>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  Mathematics Seminar Series · Shiv Nadar Institute of Eminence · 2025–26 · Hosted on GitHub Pages
+</footer>
+
+<!-- NAV SCROLL -->
+<script>
+  const sections = document.querySelectorAll("main section");
+  const navLinks = document.querySelectorAll("nav a");
+
+  function updateActiveLink() {
+    let currentSection = "";
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 120 && rect.bottom >= 120) {
+        currentSection = section.getAttribute("id");
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === "#" + currentSection) {
+        link.classList.add("active");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", updateActiveLink);
+  updateActiveLink();
+</script>
+
+<!-- 🔥 DYNAMIC ENGINE -->
+<script>
+fetch('data.json')
+  .then(res => res.json())
+  .then(data => {
+
+    const today = new Date();
+
+    const upcomingContainer = document.getElementById("upcoming-container");
+    const pastContainer = document.getElementById("past-container");
+    const scheduleBody = document.getElementById("schedule-body");
+
+    let upcomingShown = false;
+
+    data.lectures
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+      .forEach(lec => {
+
+        const lecDate = new Date(lec.date);
+
+        const formattedDate = lecDate.toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        });
+
+        const isPast = lecDate < today;
+
+        // UPCOMING
+        if (!isPast && !upcomingShown) {
+          upcomingContainer.innerHTML = `
+            <div class="upcoming-card">
+              <p class="tag">Next · ${formattedDate}</p>
+              <h3>${lec.title}</h3>
+              <p class="speaker">Presented by ${lec.speaker}</p>
+              <p class="date-line">${formattedDate} · 6:30 PM · Hall A317</p>
+            </div>
+          `;
+          upcomingShown = true;
+        }
+
+        // PAST
+        if (isPast) {
+          pastContainer.innerHTML += `
+            <div class="seminar-entry">
+              <div class="seminar-date">${formattedDate}</div>
+              <div class="seminar-info">
+                <h3>${lec.title}</h3>
+                <p class="speaker">${lec.speaker}</p>
+                <span class="topic-tag">${lec.topic}</span>
+                <div class="links">
+                  ${lec.abstract ? `<a href="${lec.abstract}" target="_blank">Abstract</a>` : ''}
+                  ${lec.notes ? `<a href="${lec.notes}" target="_blank">Notes</a>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // SCHEDULE
+        scheduleBody.innerHTML += `
+          <tr>
+            <td class="date-cell">${formattedDate}</td>
+            <td>${lec.speaker}</td>
+            <td>${lec.topic}</td>
+            <td>
+              <span class="status-badge ${isPast ? 'badge-done' : 'badge-upcoming'}">
+                ${isPast ? 'Completed' : 'Upcoming'}
+              </span>
+            </td>
+          </tr>
+        `;
+      });
+
+    if (!upcomingShown) {
+      upcomingContainer.innerHTML = "<p>No upcoming seminar scheduled.</p>";
+    }
+  });
+</script>
+
+</body>
+</html>
