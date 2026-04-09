@@ -118,6 +118,7 @@
     </div>
 
   </div>
+
   <div class="advisor-card">
     <p class="advisor-label">Faculty Advisor</p>
     <h3>Prof. A. Satyanarayana Reddy</h3>
@@ -141,14 +142,12 @@
 
   function updateActiveLink() {
     let currentSection = "";
-
     sections.forEach(section => {
       const rect = section.getBoundingClientRect();
       if (rect.top <= 120 && rect.bottom >= 120) {
         currentSection = section.getAttribute("id");
       }
     });
-
     navLinks.forEach(link => {
       link.classList.remove("active");
       if (link.getAttribute("href") === "#" + currentSection) {
@@ -161,103 +160,134 @@
   updateActiveLink();
 </script>
 
-<!-- 🔥 DYNAMIC ENGINE -->
+<!-- DYNAMIC ENGINE -->
 <script>
 fetch('data.json')
   .then(res => res.json())
   .then(data => {
 
     const today = new Date();
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
 
     const upcomingContainer = document.getElementById("upcoming-container");
-    const pastContainer = document.getElementById("past-container");
-    const scheduleBody = document.getElementById("schedule-body");
+    const pastContainer     = document.getElementById("past-container");
+    const scheduleBody      = document.getElementById("schedule-body");
+
+    const INITIAL_SHOW = 3;
+
+    // Sort ascending for schedule + upcoming logic
+    const sorted = data.lectures.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     let upcomingShown = false;
+    const pastLectures = [];
 
-    data.lectures
-      .sort((a, b) => new Date(a.date) - new Date(b.date))
-      .forEach(lec => {
+    sorted.forEach(lec => {
+      try {
+        const lecDate       = new Date(lec.date);
+        const formattedDate = lecDate.toLocaleDateString('en-GB', {
+          day: 'numeric', month: 'short', year: 'numeric'
+        });
+        const isPast = lecDate < today;
 
-        try {
-          const lecDate = new Date(lec.date);
-
-          const formattedDate = lecDate.toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-          });
-
-          const isPast = lecDate < today;
-
-          // UPCOMING (ONLY ONE)
-          if (!isPast && !upcomingShown) {
-            upcomingContainer.innerHTML = `
-              <div class="upcoming-card">
-                <p class="tag">Next · ${formattedDate}</p>
-                <h3>${lec.title || ""}</h3>
-                <p class="speaker">Presented by ${lec.speaker || ""}</p>
-                <p class="date-line">${formattedDate} · 6:30 PM · Hall A317</p>
-          
-                ${lec.abstract_text ? `
-                  <div class="abstract-box">
-                    <h4>Abstract</h4>
-                    <p>${lec.abstract_text}</p>
-                  </div>
-                ` : ''}
-              </div>
-            `;
-          
-            if (window.MathJax) {
-              MathJax.typesetPromise([upcomingContainer]);
-            }
-          
-            upcomingShown = true;
-          }
-
-          // PAST
-          if (isPast) {
-            pastContainer.innerHTML += `
-              <div class="seminar-entry">
-                <div class="seminar-date">${formattedDate}</div>
-                <div class="seminar-info">
-                  <h3>${lec.title || ""}</h3>
-                  <p class="speaker">${lec.speaker || ""}</p>
-                  <span class="topic-tag">${lec.topic || ""}</span>
-                  <div class="links">
-                    ${lec.abstract ? `<a href="${lec.abstract}" target="_blank">Abstract</a>` : ''}
-                    ${lec.notes ? `<a href="${lec.notes}" target="_blank">Notes</a>` : ''}
-                  </div>
+        // ── UPCOMING (first one only) ──────────────────────────────────────
+        if (!isPast && !upcomingShown) {
+          upcomingContainer.innerHTML = `
+            <div class="upcoming-card">
+              <p class="tag">Next · ${formattedDate}</p>
+              <h3>${lec.title || ""}</h3>
+              <p class="speaker">Presented by ${lec.speaker || ""}</p>
+              <p class="date-line">${formattedDate} · 6:30 PM · Hall A317</p>
+              ${lec.abstract_text ? `
+                <div class="abstract-box">
+                  <h4>Abstract</h4>
+                  <p>${lec.abstract_text}</p>
                 </div>
-              </div>
-            `;
-          }
-
-          // SCHEDULE (ALL ENTRIES ALWAYS)
-          scheduleBody.innerHTML += `
-            <tr>
-              <td class="date-cell">${formattedDate}</td>
-              <td>${lec.speaker || ""}</td>
-              <td>${lec.topic || ""}</td>
-              <td>
-                <span class="status-badge ${isPast ? 'badge-done' : 'badge-upcoming'}">
-                  ${isPast ? 'Completed' : 'Upcoming'}
-                </span>
-              </td>
-            </tr>
+              ` : ''}
+            </div>
           `;
-
-        } catch (err) {
-          console.error("Error rendering lecture:", lec, err);
+          if (window.MathJax) MathJax.typesetPromise([upcomingContainer]);
+          upcomingShown = true;
         }
 
-      });
+        // ── Collect past entries ───────────────────────────────────────────
+        if (isPast) {
+          pastLectures.push({ lec, formattedDate });
+        }
+
+        // ── SCHEDULE (all entries, ascending) ─────────────────────────────
+        scheduleBody.innerHTML += `
+          <tr>
+            <td class="date-cell">${formattedDate}</td>
+            <td>${lec.speaker || ""}</td>
+            <td>${lec.topic || ""}</td>
+            <td>
+              <span class="status-badge ${isPast ? 'badge-done' : 'badge-upcoming'}">
+                ${isPast ? 'Completed' : 'Upcoming'}
+              </span>
+            </td>
+          </tr>
+        `;
+
+      } catch (err) {
+        console.error("Error rendering lecture:", lec, err);
+      }
+    });
 
     if (!upcomingShown) {
       upcomingContainer.innerHTML = "<p>No upcoming seminar scheduled.</p>";
     }
-  });
+
+    // ── PAST — render descending, with Show More ───────────────────────────
+    pastLectures.reverse(); // newest first
+
+    function renderPastEntry({ lec, formattedDate }) {
+      return `
+        <div class="seminar-entry">
+          <div class="seminar-date">${formattedDate}</div>
+          <div class="seminar-info">
+            <h3>${lec.title || ""}</h3>
+            <p class="speaker">${lec.speaker || ""}</p>
+            <span class="topic-tag">${lec.topic || ""}</span>
+            <div class="links">
+              ${lec.abstract ? `<a href="${lec.abstract}" target="_blank">Abstract</a>` : ''}
+              ${lec.notes    ? `<a href="${lec.notes}"    target="_blank">Notes</a>`    : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (pastLectures.length === 0) {
+      pastContainer.innerHTML = `<p class="empty-note">No past lectures yet. Check back after the first seminar.</p>`;
+    } else {
+      // Render initial batch
+      pastLectures.slice(0, INITIAL_SHOW).forEach(entry => {
+        pastContainer.innerHTML += renderPastEntry(entry);
+      });
+
+      // Show More button (only if there are hidden entries)
+      if (pastLectures.length > INITIAL_SHOW) {
+        const remaining = pastLectures.length - INITIAL_SHOW;
+
+        const showMoreBtn = document.createElement("button");
+        showMoreBtn.textContent = `Show ${remaining} more`;
+        showMoreBtn.className   = "show-more-btn";
+
+        showMoreBtn.addEventListener("click", () => {
+          pastLectures.slice(INITIAL_SHOW).forEach(entry => {
+            const temp = document.createElement("div");
+            temp.innerHTML = renderPastEntry(entry);
+            pastContainer.insertBefore(temp.firstElementChild, showMoreBtn);
+          });
+          showMoreBtn.remove();
+        });
+
+        pastContainer.appendChild(showMoreBtn);
+      }
+    }
+
+  })
+  .catch(err => console.error("Failed to load data.json:", err));
 </script>
 
 </body>
