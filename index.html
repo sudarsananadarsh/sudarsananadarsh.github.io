@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>Mathematics Seminar Series</title>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
 
   <!-- MathJax -->
@@ -19,8 +17,7 @@
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      },
-      svg: { fontCache: 'global' }
+      }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
@@ -51,92 +48,83 @@
 
 <main>
 
-  <!-- UPCOMING -->
-  <section id="upcoming">
-    <h2>Upcoming Seminar</h2>
-    <div id="upcoming-container"></div>
-  </section>
+<!-- UPCOMING -->
+<section id="upcoming">
+  <h2>Upcoming Seminar</h2>
+  <div id="upcoming-container"></div>
+</section>
 
-  <!-- PAST -->
-  <section id="past">
-    <h2>Past Lectures</h2>
-    <div id="past-container"></div>
-  </section>
+<!-- PAST -->
+<section id="past">
+  <h2>Past Lectures</h2>
+  <div id="past-container"></div>
+</section>
 
-  <!-- SCHEDULE -->
-  <section id="schedule">
-    <h2>Full Schedule 2025–26</h2>
+<!-- SCHEDULE -->
+<section id="schedule">
+  <h2>Full Schedule 2025–26</h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Speaker</th>
+        <th>Topic</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="schedule-body"></tbody>
+  </table>
+</section>
 
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Speaker</th>
-          <th>Topic</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="schedule-body"></tbody>
-    </table>
-  </section>
+<!-- ORGANIZERS -->
+<section id="organizers">
+  <h2>Organizers</h2>
 
-  <!-- ORGANIZERS -->
-  <section id="organizers">
-    <h2>Organizers</h2>
+  <div class="organizer-grid">
 
-    <div class="organizer-grid">
-
-      <div class="organizer-card">
-        <div class="initials">SM</div>
-        <h3>Suhas B Mahesh</h3>
-        <p>Geometry · 1st Year</p>
-        <a href="mailto:sm834@snu.edu.in">sm834@snu.edu.in</a>
-      </div>
-
-      <div class="organizer-card">
-        <div class="initials">SH</div>
-        <h3>Shivani Mishra</h3>
-        <p>Geometry · 1st Year</p>
-        <a href="mailto:sm907@snu.edu.in">sm907@snu.edu.in</a>
-      </div>
-
-      <div class="organizer-card">
-        <div class="initials">LS</div>
-        <h3>Leena Sarma</h3>
-        <p>Optimization · 1st Year</p>
-        <a href="mailto:ls451@snu.edu.in">ls451@snu.edu.in</a>
-      </div>
-
-      <div class="organizer-card">
-        <div class="initials">RB</div>
-        <h3>R Bhadrashri</h3>
-        <p>Algebra · 1st Year</p>
-        <a href="mailto:rb150@snu.edu.in">rb150@snu.edu.in</a>
-      </div>
-
-      <div class="organizer-card">
-        <div class="initials">AS</div>
-        <h3>Adarsh S</h3>
-        <p>Data Science · 1st Year</p>
-        <a href="mailto:as197@snu.edu.in">as197@snu.edu.in</a>
-      </div>
-
+    <div class="organizer-card">
+      <div class="initials">SM</div>
+      <h3>Suhas B Mahesh</h3>
+      <p>Geometry · 1st Year</p>
+      <a href="mailto:sm834@snu.edu.in">sm834@snu.edu.in</a>
     </div>
 
-    <div class="advisor-card">
-      <p class="advisor-label">Faculty Advisor</p>
-      <h3>Prof. A. Satyanarayana Reddy</h3>
-      <p>Department of Mathematics</p>
-      <p>School of Natural Sciences</p>
-      <p class="advisor-sub">Shiv Nadar Institute of Eminence</p>
+    <div class="organizer-card">
+      <div class="initials">SH</div>
+      <h3>Shivani Mishra</h3>
+      <p>Geometry · 1st Year</p>
+      <a href="mailto:sm907@snu.edu.in">sm907@snu.edu.in</a>
     </div>
 
-  </section>
+    <div class="organizer-card">
+      <div class="initials">LS</div>
+      <h3>Leena Sarma</h3>
+      <p>Optimization · 1st Year</p>
+      <a href="mailto:ls451@snu.edu.in">ls451@snu.edu.in</a>
+    </div>
+
+    <div class="organizer-card">
+      <div class="initials">RB</div>
+      <h3>R Bhadrashri</h3>
+      <p>Algebra · 1st Year</p>
+      <a href="mailto:rb150@snu.edu.in">rb150@snu.edu.in</a>
+    </div>
+
+    <div class="organizer-card">
+      <div class="initials">AS</div>
+      <h3>Adarsh S</h3>
+      <p>Data Science · 1st Year</p>
+      <a href="mailto:as197@snu.edu.in">as197@snu.edu.in</a>
+    </div>
+
+  </div>
+
+</section>
 
 </main>
 
 <footer>
-  Mathematics Seminar Series · Shiv Nadar Institute of Eminence · 2025–26 · Hosted on GitHub Pages
+  Mathematics Seminar Series · Shiv Nadar Institute of Eminence · 2025–26
 </footer>
 
 <!-- NAV SCROLL -->
@@ -173,6 +161,7 @@ fetch('data.json')
   .then(data => {
 
     const today = new Date();
+    today.setHours(0,0,0,0);
 
     const upcomingContainer = document.getElementById("upcoming-container");
     const pastContainer = document.getElementById("past-container");
@@ -184,60 +173,73 @@ fetch('data.json')
       .sort((a, b) => new Date(a.date) - new Date(b.date))
       .forEach(lec => {
 
-        const lecDate = new Date(lec.date);
+        try {
+          const lecDate = new Date(lec.date);
 
-        const formattedDate = lecDate.toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric'
-        });
+          const formattedDate = lecDate.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          });
 
-        const isPast = lecDate < today;
+          const isPast = lecDate < today;
 
-        // UPCOMING
-        if (!isPast && !upcomingShown) {
-          upcomingContainer.innerHTML = `
-            <div class="upcoming-card">
-              <p class="tag">Next · ${formattedDate}</p>
-              <h3>${lec.title}</h3>
-              <p class="speaker">Presented by ${lec.speaker}</p>
-              <p class="date-line">${formattedDate} · 6:30 PM · Hall A317</p>
-            </div>
-          `;
-          upcomingShown = true;
-        }
+          // UPCOMING (ONLY ONE)
+          if (!isPast && !upcomingShown) {
+            upcomingContainer.innerHTML = `
+              <div class="upcoming-card">
+                <p class="tag">Next · ${formattedDate}</p>
+                <h3>${lec.title || ""}</h3>
+                <p class="speaker">Presented by ${lec.speaker || ""}</p>
+                <p class="date-line">${formattedDate} · 6:30 PM · Hall A317</p>
 
-        // PAST
-        if (isPast) {
-          pastContainer.innerHTML += `
-            <div class="seminar-entry">
-              <div class="seminar-date">${formattedDate}</div>
-              <div class="seminar-info">
-                <h3>${lec.title}</h3>
-                <p class="speaker">${lec.speaker}</p>
-                <span class="topic-tag">${lec.topic}</span>
-                <div class="links">
-                  ${lec.abstract ? `<a href="${lec.abstract}" target="_blank">Abstract</a>` : ''}
-                  ${lec.notes ? `<a href="${lec.notes}" target="_blank">Notes</a>` : ''}
+                ${lec.abstract ? `
+                  <div class="abstract-box">
+                    <h4>Abstract</h4>
+                    <a href="${lec.abstract}" target="_blank">View Abstract</a>
+                  </div>
+                ` : ''}
+              </div>
+            `;
+            upcomingShown = true;
+          }
+
+          // PAST
+          if (isPast) {
+            pastContainer.innerHTML += `
+              <div class="seminar-entry">
+                <div class="seminar-date">${formattedDate}</div>
+                <div class="seminar-info">
+                  <h3>${lec.title || ""}</h3>
+                  <p class="speaker">${lec.speaker || ""}</p>
+                  <span class="topic-tag">${lec.topic || ""}</span>
+                  <div class="links">
+                    ${lec.abstract ? `<a href="${lec.abstract}" target="_blank">Abstract</a>` : ''}
+                    ${lec.notes ? `<a href="${lec.notes}" target="_blank">Notes</a>` : ''}
+                  </div>
                 </div>
               </div>
-            </div>
+            `;
+          }
+
+          // SCHEDULE (ALL ENTRIES ALWAYS)
+          scheduleBody.innerHTML += `
+            <tr>
+              <td class="date-cell">${formattedDate}</td>
+              <td>${lec.speaker || ""}</td>
+              <td>${lec.topic || ""}</td>
+              <td>
+                <span class="status-badge ${isPast ? 'badge-done' : 'badge-upcoming'}">
+                  ${isPast ? 'Completed' : 'Upcoming'}
+                </span>
+              </td>
+            </tr>
           `;
+
+        } catch (err) {
+          console.error("Error rendering lecture:", lec, err);
         }
 
-        // SCHEDULE
-        scheduleBody.innerHTML += `
-          <tr>
-            <td class="date-cell">${formattedDate}</td>
-            <td>${lec.speaker}</td>
-            <td>${lec.topic}</td>
-            <td>
-              <span class="status-badge ${isPast ? 'badge-done' : 'badge-upcoming'}">
-                ${isPast ? 'Completed' : 'Upcoming'}
-              </span>
-            </td>
-          </tr>
-        `;
       });
 
     if (!upcomingShown) {
