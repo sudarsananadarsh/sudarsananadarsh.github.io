@@ -1,0 +1,28 @@
+{
+  "lectures": [
+    {
+      "date": "2026-04-01",
+      "title": "Modelling Interactions in Complex Systems",
+      "speaker": "Hiren Dhameliya",
+      "topic": "Complex Networks",
+      "abstract": "assets/abstracts/hiren_abstract.pdf",
+      "notes": "assets/notes/hiren_notes.pdf"
+    },
+    {
+      "date": "2026-04-09",
+      "title": "Lorentzian Length Spaces",
+      "speaker": "Suhas B Mahesh",
+      "topic": "Geometry",
+      "abstract": "",
+      "notes": ""
+    },
+    {
+      "date": "2026-04-16",
+      "title": "Algebra",
+      "speaker": "R Bhadrashri",
+      "topic": "Algebra",
+      "abstract": "",
+      "notes": ""
+    }
+  ]
+}
