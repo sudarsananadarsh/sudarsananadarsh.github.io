@@ -2,7 +2,7 @@
   "lectures": [
     {
       "date": "2026-04-01",
-      "title": "Modeling Interactions in Complex Systems",
+      "title": "Modeling Interactions in Complex Systems: From Graphs to Simplicial Complexes",
       "speaker": "Hiren Dhameliya",
       "topic": "Complex Networks",
       "abstract_text": "",
@@ -23,7 +23,7 @@
       "title": "Algebra",
       "speaker": "R Bhadrashri",
       "topic": "Algebra",
-      "abstract_text": "We study dynamical systems on compact manifolds $(M, g)$ and analyze invariant measures.",
+      "abstract_text": "",
       "abstract": "assets/abstracts/bhadra_abstract.pdf",
       "notes": "assets/notes/bhadra_notes.pdf"
     },
